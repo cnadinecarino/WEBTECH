@@ -1,0 +1,15 @@
+# Copy this file to .env and replace placeholder values for your computer.
+# Never commit the resulting .env file.
+
+CI_ENVIRONMENT = development
+
+app.baseURL = 'http://localhost:8080/'
+app.indexPage = ''
+
+database.default.hostname = localhost
+database.default.database = tfa2_pos
+database.default.username = YOUR_MYSQL_USERNAME
+database.default.password = YOUR_MYSQL_PASSWORD
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
