@@ -1,0 +1,22 @@
+# Only application-generated PNG thumbnails may be served from this directory.
+# The web server must allow these overrides (or copy them into its vhost config).
+Options -Indexes -ExecCGI
+
+<IfModule mod_mime.c>
+    RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .cgi .pl .py .png
+    RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .cgi .pl .py
+</IfModule>
+
+<FilesMatch "^(?!avatar_[a-f0-9]{32}\.png$)">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^avatar_[a-f0-9]{32}\.png$">
+    Require all granted
+    SetHandler none
+    ForceType image/png
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
