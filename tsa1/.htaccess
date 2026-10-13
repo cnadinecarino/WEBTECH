@@ -1,0 +1,24 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Remove /public from URLs explicitly requested by the browser. THE_REQUEST
+    # prevents this redirect from firing again after the internal rewrite below.
+    RewriteCond %{THE_REQUEST} \s/+TSA1/public(?:[/?\s]) [NC]
+    RewriteRule ^public/?$ ./ [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/+TSA1/public(?:[/?\s]) [NC]
+    RewriteRule ^public/(.*)$ $1 [R=301,L,NE]
+
+    # Do not allow framework or writable files to be served directly.
+    RewriteRule ^(?:app|tests|vendor|writable)(?:/|$) - [F,L,NC]
+
+    # Keep public/index.php as CodeIgniter's front controller without exposing
+    # the public directory in the browser address.
+    RewriteRule ^(?!public(?:/|$))(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
